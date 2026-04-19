@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="status-card">
+    <div class="status-left">
+        <span class="status-label">STATUS</span>
+        <span class="status-value {{ 'online' if rig.online else 'offline' }}">
+            {{ 'ONLINE' if rig.online else 'OFFLINE' }}
+        </span>
+    </div>
+
+    <div class="worker-select">
+        <label>WORKER</label>
+        <select onchange="location = this.value;">
+            {% for r in rigs %}
+            <option value="/rig/{{ r.rig_id }}" {% if r.rig_id == rig.rig_id %}selected{% endif %}>
+                {{ r.worker }} ({{ r.rig_id }})
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+
+<div class="monitor-grid">
+
+    <div class="monitor-card">
+        <span class="monitor-label">Hashrate</span>
+        <strong class="monitor-value">{{ rig.hashrate }} H/s</strong>
+    </div>
+
+    <div class="monitor-card">
+        <span class="monitor-label">CPU</span>
+        <strong class="monitor-value">{{ rig.cpu }}%</strong>
+    </div>
+
+    <div class="monitor-card">
+        <span class="monitor-label">RAM</span>
+        <strong class="monitor-value">{{ rig.ram }}%</strong>
+    </div>
+
+    <div class="monitor-card">
+        <span class="monitor-label">Temp</span>
+        <strong class="monitor-value">{{ rig.temp }}</strong>
+    </div>
+
+    <div class="monitor-card">
+        <span class="monitor-label">Disk</span>
+        <strong class="monitor-value">{{ rig.disk }}</strong>
+    </div>
+
+    <div class="monitor-card">
+        <span class="monitor-label">Accepted</span>
+        <strong class="monitor-value">{{ rig.accepted }}</strong>
+    </div>
+
+    <div class="monitor-card">
+        <span class="monitor-label">Rejected</span>
+        <strong class="monitor-value">{{ rig.rejected }}</strong>
+    </div>
+
+    <div class="monitor-card">
+        <span class="monitor-label">Threads</span>
+        <strong class="monitor-value">{{ rig.threads }}</strong>
+    </div>
+
+    <div class="monitor-card">
+        <span class="monitor-label">Pool</span>
+        <strong class="monitor-value">{{ rig.pool }}</strong>
+    </div>
+
+    <div class="monitor-card">
+        <span class="monitor-label">IP</span>
+        <strong class="monitor-value">{{ rig.ip }}</strong>
+    </div>
+
+    <div class="monitor-card">
+        <span class="monitor-label">Uptime</span>
+        <strong class="monitor-value">{{ rig.uptime }}</strong>
+    </div>
+
+    <div class="monitor-card">
+        <span class="monitor-label">Load</span>
+        <strong class="monitor-value">{{ rig.load }}</strong>
+    </div>
+
+    <div class="monitor-card">
+        <span class="monitor-label">Ping</span>
+        <strong class="monitor-value">{{ rig.ping }} ms</strong>
+    </div>
+
+    <div class="monitor-card">
+        <span class="monitor-label">Miner Status</span>
+        <strong class="monitor-value">
+            {{ rig.local_status.miner_status if rig.local_status else 'n/a' }}
+        </strong>
+    </div>
+
+    <div class="monitor-card">
+        <span class="monitor-label">Autostart</span>
+        <strong class="monitor-value">
+            {{ rig.local_status.miner_enabled if rig.local_status else 'n/a' }}
+        </strong>
+    </div>
+
+</div>
+
+<div class="detail-layout">
+    <div class="detail-box">
+        <h3>Configuração do minerador</h3>
+
+        <form method="post" action="/rig/{{ rig.rig_id }}/config" class="config-form">
+
+            <label>Pool Host</label>
+            <input type="text" name="POOL_HOST" value="{{ rig.config.pool.POOL_HOST if rig.config and rig.config.pool else '' }}">
+
+            <label>Password</label>
+            <input type="text" name="POOL_PASS" value="{{ rig.config.pool.POOL_PASS if rig.config and rig.config.pool else '' }}">
+
+            <label>Pool Port</label>
+            <input type="text" name="POOL_PORT" value="{{ rig.config.pool.POOL_PORT if rig.config and rig.config.pool else '' }}">
+
+            <label>Algoritmo</label>
+            <input type="text" name="ALGO" value="{{ rig.config.pool.ALGO if rig.config and rig.config.pool else 'rx/0' }}">
+
+            <label>Wallet / User</label>
+            <input type="text" name="POOL_USER" value="{{ rig.config.pool.POOL_USER if rig.config and rig.config.pool else '' }}">
+
+            <label>Miner</label>
+            <input type="text" name="MINER" value="{{ rig.config.miner.MINER if rig.config and rig.config.miner else 'xmrig' }}">
+
+            <label>Threads</label>
+            <input type="text" name="THREADS" value="{{ rig.config.miner.THREADS if rig.config and rig.config.miner else '14' }}">
+
+            <label>Donate Level</label>
+            <input type="text" name="DONATE_LEVEL" value="{{ rig.config.miner.DONATE_LEVEL if rig.config and rig.config.miner else '1' }}">
+
+            <label>CPU Priority</label>
+            <input type="text" name="CPU_PRIORITY" value="{{ rig.config.miner.CPU_PRIORITY if rig.config and rig.config.miner else '5' }}">
+
+            <label>Huge Pages</label>
+            <input type="text" name="HUGE_PAGES" value="{{ rig.config.miner.HUGE_PAGES if rig.config and rig.config.miner else 'true' }}">
+
+            <button type="submit" class="btn btn-primary">Salvar configuração</button>
+        </form>
+    </div>
+</div>
+
+<p><a href="/" class="back-link">← Voltar</a></p>
+{% endblock %}

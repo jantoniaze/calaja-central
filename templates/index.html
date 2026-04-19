@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="cluster-summary">
+    <div class="summary-box">
+        <span class="summary-label">Total Rigs</span>
+        <strong class="summary-value">{{ total_rigs }}</strong>
+    </div>
+
+    <div class="summary-box">
+        <span class="summary-label">Online</span>
+        <strong class="summary-value online">{{ online_rigs }}</strong>
+    </div>
+
+    <div class="summary-box">
+        <span class="summary-label">Offline</span>
+        <strong class="summary-value offline">{{ offline_rigs }}</strong>
+    </div>
+</div>
+
+<h2>Cluster de Rigs</h2>
+
+<div class="grid">
+{% for rig in rigs %}
+    <a href="/rig/{{ rig.rig_id }}" class="card">
+        <h3>{{ rig.rig_id }}</h3>
+
+        <p>Status:
+            <span class="{{ 'online' if rig.online else 'offline' }}">
+                {{ 'ONLINE' if rig.online else 'OFFLINE' }}
+            </span>
+        </p>
+
+        <p>Worker: {{ rig.worker }}</p>
+        <p>Location: {{ rig.location }}</p>
+        <p>Hashrate: {{ rig.hashrate }} H/s</p>
+        <p>CPU: {{ rig.cpu }}%</p>
+        <p>Temp: {{ rig.temp }}</p>
+        <p>Accepted: {{ rig.accepted }}</p>
+        <p>IP: {{ rig.ip }}</p>
+    </a>
+{% endfor %}
+</div>
+
+{% endblock %}
