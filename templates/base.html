@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Calaja Central</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta http-equiv="refresh" content="20">
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-content">
+        <div class="logo">
+            🚀 Calaja Central
+        </div>
+
+        {% if rig %}
+        <div class="top-actions">
+            <form method="post" action="/rig/{{ rig.rig_id }}/action/start">
+                <button type="submit" class="btn btn-success">Start</button>
+            </form>
+
+            <form method="post" action="/rig/{{ rig.rig_id }}/action/stop">
+                <button type="submit" class="btn btn-danger">Stop</button>
+            </form>
+
+            <form method="post" action="/rig/{{ rig.rig_id }}/action/restart">
+                <button type="submit" class="btn btn-primary">Restart</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>

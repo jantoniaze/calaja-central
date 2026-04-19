@@ -1,26 +1,36 @@
 # Calaja Central
 
-Servidor central do CalajaMinerOS.
+Servidor central do ecossistema Calaja Miner.
 
 ## Funções
 
-- Receber dados das rigs
-- API REST
-- Dashboard web
-- Monitoramento em tempo real
+- Receber métricas das rigs
+- Disponibilizar API REST
+- Exibir dashboard web
+- Mostrar visão geral e detalhe por rig
+
+## Rotas
+
+- `/` → visão geral das rigs
+- `/rig/<rig_id>` → página individual da rig
+- `/api/status` → recebimento de status das rigs
+- `/api/rigs` → retorno JSON com todas as rigs
+- `/health` → healthcheck
 
 ## Porta padrão
 
-5001
+- `5001`
 
 ## Estrutura
 
-- app.py → backend Flask
-- templates/ → frontend HTML
-- static/ → CSS
+- `app.py` → backend Flask
+- `templates/` → páginas HTML
+- `static/` → CSS
+- `requirements.txt` → dependências Python
 
 ## Próximos passos
 
-- Dashboard avançado
-- Controle remoto
-- IA de otimização
+- histórico de hashrate
+- gráficos por rig
+- alertas online/offline
+- controle remoto
